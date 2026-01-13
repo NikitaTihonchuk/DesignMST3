@@ -1,7 +1,14 @@
 import SwiftUI
 
+enum SubscriptionPlan {
+    case weekly
+    case monthly
+    case yearly
+}
+
 struct PaywallView: View {
     @Environment(\.dismiss) var dismiss
+    @State private var selectedPlan: SubscriptionPlan = .weekly
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -66,7 +73,7 @@ struct PaywallView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         Image("mostPopularPaywallLabel")
                         Button(action: {
-                            
+                            selectedPlan = .weekly
                         }, label: {
                             ZStack {
                                 HStack {
@@ -90,7 +97,7 @@ struct PaywallView: View {
                                     Spacer()
                                     
                                     
-                                    Image("checkmarkOn")
+                                    Image(selectedPlan == .weekly ? "checkmarkOn" : "checkmarkOff")
                                     
                                 }
                                 .padding(.horizontal, 16.0)
@@ -116,7 +123,7 @@ struct PaywallView: View {
 
                     
                     Button(action: {
-                        
+                        selectedPlan = .monthly
                     }, label: {
                         ZStack {
                             HStack {
@@ -140,7 +147,7 @@ struct PaywallView: View {
                                 Spacer()
                                 
                                 
-                                Image("checkmarkOn")
+                                Image(selectedPlan == .monthly ? "checkmarkOn" : "checkmarkOff")
                                 
                                 
                             }
@@ -165,7 +172,7 @@ struct PaywallView: View {
                     })
                     
                     Button(action: {
-                        
+                        selectedPlan = .yearly
                     }, label: {
                         ZStack {
                             HStack {
@@ -188,7 +195,7 @@ struct PaywallView: View {
                                 
                                 Spacer()
                                 
-                                Image("checkmarkOn")
+                                Image(selectedPlan == .yearly ? "checkmarkOn" : "checkmarkOff")
                                 
                             }
                             .padding(.horizontal, 16.0)
@@ -252,7 +259,7 @@ struct PaywallView: View {
                 }
                 
                 Button {
-                    
+                    purchaseSubscription()
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 28)
@@ -329,6 +336,18 @@ struct PaywallView: View {
 
             }
         }
+    }
+    
+    private func purchaseSubscription() {
+        switch selectedPlan {
+        case .weekly:
+            print("Purchasing Weekly Plan: $4.99/week with 3-day trial")
+        case .monthly:
+            print("Purchasing Monthly Plan: $12.99/month")
+        case .yearly:
+            print("Purchasing Yearly Plan: $49.99/year")
+        }
+        // Add your purchase logic here
     }
 }
 
